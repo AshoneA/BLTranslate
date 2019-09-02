@@ -2,7 +2,7 @@
 	"name": "BLTranslate",
 	"displayName": "BLTranslate",
 	"description": "",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "zefengbao",
 	"engines": {
 		"vscode": "^1.37.0"
@@ -23,12 +23,12 @@
 		],
 		"menus": {
 			"editor/context": [
-			 {
-				 "command": "extension.BLTranslate"
-			 }
+				{
+					"command": "extension.BLTranslate"
+				}
 			]
 		},
-		"keybindings":[
+		"keybindings": [
 			{
 				"command": "extension.BLTranslate",
 				"key": "ctrl+i",
