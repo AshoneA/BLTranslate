@@ -3,6 +3,7 @@
 	"displayName": "BLTranslate",
 	"description": "",
 	"version": "0.0.1",
+	"publisher": "zefengbao",
 	"engines": {
 		"vscode": "^1.37.0"
 	},
