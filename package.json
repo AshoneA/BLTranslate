@@ -2,7 +2,7 @@
   "name": "BLTranslate",
   "displayName": "BLTranslate",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "zefengbao",
   "engines": {
     "vscode": "^1.37.0"
@@ -11,8 +11,8 @@
     "Other"
   ],
   "activationEvents": [
-		"onCommand:extension.BLTranslate",
-		"onCommand:extension.BLi18n"
+    "onCommand:extension.BLTranslate",
+    "onCommand:extension.BLi18n"
   ],
   "main": "./out/extension.js",
   "contributes": {
