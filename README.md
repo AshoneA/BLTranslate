@@ -1,5 +1,5 @@
 # translate extension for blacklake
-## right click  to BLTranslate or command + i (ctrl + i )
+## right click  to BLTranslate or `cmd+i` (ctrl + i )
 
 selected text like `text` will translate to <FormattedMessage `defaultMessage={'text'}>`
 
@@ -14,4 +14,4 @@ if you project has a file named is .bl-custom.json, file content like
 ```
 the file will be ignored
 
-## your can only do translate by right click `BLi18n`
+## you can only translate by right click `BLi18n` or `cmd+shift+i` after select text

@@ -45,8 +45,8 @@
       },
       {
         "command": "extension.BLi18n",
-        "key": "ctrl + shift + i",
-        "mac": "shift + cmd + i",
+        "key": "cmd+shift+i",
+        "mac": "cmd+shift+i",
         "when": "editorTextFocus"
       }
     ]
