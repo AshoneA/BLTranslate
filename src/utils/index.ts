@@ -12,6 +12,6 @@ export const getPkgInfo = () => {
 
 export const getCustomConfig = (): { i18nKey: string } => {
   const folderPath = vscode.workspace.rootPath;
-  const customeConfig = require(folderPath + "/.bl-custom.json");
+  const customeConfig = JSON.parse(fs.readFileSync(folderPath + "/.bl-custom.json", "utf-8"));
   return customeConfig;
 };
