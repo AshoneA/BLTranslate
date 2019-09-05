@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import * as ggTranslate from "@vitalets/google-translate-api";
+import * as utils from "./utils/index";
 
 interface JsonObj {
   [key: string]: string;
@@ -57,8 +58,8 @@ const formatI18n = (text: string) => {
           folderPath,
           "src/utils/locale/languageFiles/enUS/web-en.json"
         );
-        const CNJson = JSON.parse(fs.readFileSync(CNPath, 'utf-8'));
-        const ENJson = JSON.parse(fs.readFileSync(ENPath, 'utf-8'));
+        const CNJson = JSON.parse(fs.readFileSync(CNPath, "utf-8"));
+        const ENJson = JSON.parse(fs.readFileSync(ENPath, "utf-8"));
         if (!Object.values(CNJson).includes(text)) {
           ggTranslate(text, { to: "en", tld: "cn" }).then(
             (res: { text: string }) => {
@@ -73,6 +74,58 @@ const formatI18n = (text: string) => {
         }
       });
   } catch (error) {}
+};
+
+const handleAppFormat = (_text: string) => {
+  let text = _text;
+  if (text.startsWith("'") && text.endsWith("'")) {
+    text = _text.slice(1, -1);
+  }
+  const folderPath = vscode.workspace.rootPath || "";
+  const i18nDir = path.resolve(folderPath, "app/constants/translations");
+  let textKey = "";
+  const files = fs.readdirSync(i18nDir);
+  files.forEach(file => {
+    if (/zh*/.test(file)) {
+      const json = JSON.parse(
+        fs.readFileSync(path.resolve(i18nDir, file), "utf-8")
+      );
+      Object.keys(json).some(t => {
+        if (json[t] === text) {
+          textKey = t;
+          return true;
+        }
+        return false;
+      });
+    }
+  });
+  // project haven't translate
+  if (!textKey) {
+    const { i18nKey } = utils.getCustomConfig();
+    const CNPath = path.resolve(i18nDir, `zh-${i18nKey}.json`);
+    const ENPath = path.resolve(i18nDir, `en-${i18nKey}.json`);
+    const CNJson = JSON.parse(fs.readFileSync(CNPath, "utf-8"));
+    const ENJson = JSON.parse(fs.readFileSync(ENPath, "utf-8"));
+    const maxKey = Math.max(
+      ...Object.keys(CNJson).map((key: string) =>
+        parseInt(key.replace(`key${i18nKey}-`, ""))
+      )
+    );
+    textKey = `key${i18nKey}-${maxKey + 1}`;
+    ggTranslate(text, { to: "en", tld: "cn" }).then((res: { text: string }) => {
+      const { text: ENText } = res;
+      writeJsonToFile(CNPath, {
+        ...CNJson,
+        [textKey]: text
+      });
+      writeJsonToFile(ENPath, {
+        ...ENJson,
+        [textKey]: ENText
+      });
+      vscode.window.showInformationMessage("翻译成功!");
+    });
+  }
+  return textKey;
 };
 
 // this method is called when your extension is activated
@@ -93,15 +146,31 @@ export function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
       const selection = TextEditor.selections[0];
       const text = TextEditor.document.getText(selection);
+      const pkg = utils.getPkgInfo();
       let replaceText = "";
-      if (text.startsWith("{") && text.endsWith("}")) {
-        replaceText = `<FormattedMessage defaultMessage=${text} />`;
+      if (pkg.name === "gc_native") {
+        const appTranslateKey = handleAppFormat(text);
+        const matchs = text.match(/(\${[^\${}]*})/g);
+        let lastStr = "";
+        if (matchs) {
+          const variables = matchs.map(v =>
+            v.replace("${", "").replace("}", "")
+          );
+          lastStr = `,{${variables.map(v => `${v}: `).join(",")}}`;
+          replaceText = `i18nConfigGlobal.w('${appTranslateKey}'${lastStr})`;
+        } else {
+          replaceText = `i18nConfigGlobal.t('${appTranslateKey}')`;
+        }
       } else {
-        replaceText = `<FormattedMessage defaultMessage={'${text}'} />`;
+        if (text.startsWith("{") && text.endsWith("}")) {
+          replaceText = `<FormattedMessage defaultMessage=${text} />`;
+        } else {
+          replaceText = `<FormattedMessage defaultMessage={'${text}'} />`;
+        }
+        formatI18n(text);
       }
       TextEditorEdit.replace(selection, replaceText);
       vscode.window.showInformationMessage("Format成功!");
-      formatI18n(text);
     }
   );
 
