@@ -61,7 +61,7 @@ const formatI18n = (text: string) => {
         const CNJson = JSON.parse(fs.readFileSync(CNPath, "utf-8"));
         const ENJson = JSON.parse(fs.readFileSync(ENPath, "utf-8"));
         if (!Object.values(CNJson).includes(text)) {
-          ggTranslate(text, { to: "en", tld: "cn" }).then(
+          ggTranslate(text, { to: "en", tld: "cn", client: 'gtx' }).then(
             (res: { text: string }) => {
               const { text: ENText } = res;
               writeJsonToFile(CNPath, generateJson(CNJson, text));
