@@ -1,5 +1,9 @@
 ## <small>0.0.6 (2019-09-05)</small>
 
+* fix: 修复翻译的英文如果是变量首字母会大写的情况
+
+## <small>0.0.6 (2019-09-05)</small>
+
 * 0.0.6 ([98a740d](https://github.com/AshoneA/BLTranslate/commit/98a740d))
 * feat: 每次读取最新的.bl-custom文件 ([c6b163b](https://github.com/AshoneA/BLTranslate/commit/c6b163b))
 
