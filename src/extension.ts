@@ -78,7 +78,10 @@ const formatI18n = (text: string) => {
 
 const handleAppFormat = (_text: string) => {
   let text = _text;
-  if (text.startsWith("'") && text.endsWith("'")) {
+  if (
+    (text.startsWith("'") && text.endsWith("'")) ||
+    (text.startsWith('"') && text.endsWith('"'))
+  ) {
     text = _text.slice(1, -1);
   }
   const folderPath = vscode.workspace.rootPath || "";
