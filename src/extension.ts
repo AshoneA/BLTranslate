@@ -153,10 +153,7 @@ export function activate(context: vscode.ExtensionContext) {
         const matchs = text.match(/(\${[^\${}]*})/g);
         let lastStr = "";
         if (matchs) {
-          const variables = matchs.map(v =>
-            v.replace("${", "").replace("}", "")
-          );
-          lastStr = `,{${variables.map(v => `${v}: `).join(",")}}`;
+          lastStr = `,{${matchs.map(v => v.slice(2, -1)).join(", ")}}`;
           replaceText = `i18nConfigGlobal.w('${appTranslateKey}'${lastStr})`;
         } else {
           replaceText = `i18nConfigGlobal.t('${appTranslateKey}')`;
