@@ -22,5 +22,5 @@ you can only translate by right click `BLi18n` or `cmd+shift+i` after select tex
 
 right click  to BLTranslate or `cmd+i` (ctrl + i )  
 selected text like `你好` will formatted to `i18nConfigGlobal.t('${appTranslateKey}')`, the extension will find the word in all language file. if it exists,  appTranslateKey is the word key, if not , it will write a new word key to corresponding files first.  
-like '{user}, 你好' will formatted to `i18nConfigGlobal.w('${appTranslateKey}', { user: })`, so you can put the variables in second param.
+like ``` `${user}, 你好` ``` will be formatted to `i18nConfigGlobal.w('${appTranslateKey}', { user })` with the default param `user` put in already.
 
