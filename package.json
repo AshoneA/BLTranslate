@@ -14,6 +14,10 @@
     "onCommand:extension.BLTranslate",
     "onCommand:extension.BLi18n"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AshoneA/BLTranslate"
+  },
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
