@@ -209,10 +209,10 @@ export function activate(context: vscode.ExtensionContext) {
       if (pkg.name === "gc_native") {
         const appTranslateKey = handleAppFormat(text);
         const matchs = text.match(/(\${[^\${}]*})/g);
-        let lastStr = "";
         if (matchs) {
-          lastStr = `{${matchs.map((v) => v.slice(2, -1)).join(", ")}}`;
-          replaceText = `i18nConfigGlobal.w('${appTranslateKey}', ${lastStr})`;
+          replaceText = `i18nConfigGlobal.w('${appTranslateKey}', {${matchs
+            .map((v) => v.slice(2, -1))
+            .join(", ")}})`;
         } else {
           replaceText = `i18nConfigGlobal.t('${appTranslateKey}')`;
         }
