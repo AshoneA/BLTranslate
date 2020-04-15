@@ -1,43 +1,63 @@
-## <small>0.0.6 (2019-09-05)</small>
+## [0.0.8](https://github.com/AshoneA/BLTranslate/compare/v0.0.7...v0.0.8) (2020-04-15)
 
-* fix: 修复翻译的英文如果是变量首字母会大写的情况
+* web 增加越南语、韩语自动翻译
+* App 支持双引号包裹的字符串
+* App 调整模板字符串处理
 
-## <small>0.0.6 (2019-09-05)</small>
-
-* 0.0.6 ([98a740d](https://github.com/AshoneA/BLTranslate/commit/98a740d))
-* feat: 每次读取最新的.bl-custom文件 ([c6b163b](https://github.com/AshoneA/BLTranslate/commit/c6b163b))
-
+## [0.0.7](https://github.com/AshoneA/BLTranslate/compare/v0.0.6...v0.0.7) (2019-10-25)
 
 
-## <small>0.0.5 (2019-09-05)</small>
+### Bug Fixes
 
-* 0.0.5 ([50d8957](https://github.com/AshoneA/BLTranslate/commit/50d8957))
-* feat: support app ([f813b68](https://github.com/AshoneA/BLTranslate/commit/f813b68))
+* 修复翻译的英文如果是变量首字母会大写的情况 ([3d845f2](https://github.com/AshoneA/BLTranslate/commit/3d845f207660c5ed64a9adcb17edac62a885f7f1))
 
 
 
-## <small>0.0.4 (2019-09-04)</small>
-
-* 0.0.4 ([de4a9dd](https://github.com/AshoneA/BLTranslate/commit/de4a9dd))
-* feat: add keybindings ([88d9f88](https://github.com/AshoneA/BLTranslate/commit/88d9f88))
-* feat: 增加自动翻译 ([194f836](https://github.com/AshoneA/BLTranslate/commit/194f836))
+## [0.0.6](https://github.com/AshoneA/BLTranslate/compare/v0.0.5...v0.0.6) (2019-09-05)
 
 
+### Features
 
-## <small>0.0.3 (2019-09-02)</small>
-
-* 0.0.3 ([c655233](https://github.com/AshoneA/BLTranslate/commit/c655233))
-* feat: update readme ([33cb494](https://github.com/AshoneA/BLTranslate/commit/33cb494))
+* 每次读取最新的.bl-custom文件 ([c6b163b](https://github.com/AshoneA/BLTranslate/commit/c6b163b97f48d52d70d28d299419fe851ee3cc74))
 
 
 
-## <small>0.0.2 (2019-09-02)</small>
+## [0.0.5](https://github.com/AshoneA/BLTranslate/compare/v0.0.4...v0.0.5) (2019-09-05)
 
-* 0.0.2 ([589b6b1](https://github.com/AshoneA/BLTranslate/commit/589b6b1))
-* first commit ([81a582a](https://github.com/AshoneA/BLTranslate/commit/81a582a))
-* feat: add keybindings ([df5e899](https://github.com/AshoneA/BLTranslate/commit/df5e899))
-* feat: add readme ([876ac02](https://github.com/AshoneA/BLTranslate/commit/876ac02))
-* feat: 适配 {} ([28e07d9](https://github.com/AshoneA/BLTranslate/commit/28e07d9))
+
+### Features
+
+* support app ([f813b68](https://github.com/AshoneA/BLTranslate/commit/f813b68719cb8fe7298f95ca28ab75a8f6512374))
+
+
+
+## [0.0.4](https://github.com/AshoneA/BLTranslate/compare/v0.0.3...v0.0.4) (2019-09-04)
+
+
+### Features
+
+* add keybindings ([88d9f88](https://github.com/AshoneA/BLTranslate/commit/88d9f882f909b1e7cf0c99f31dee25a2691feedb))
+* 增加自动翻译 ([194f836](https://github.com/AshoneA/BLTranslate/commit/194f836a3c8ad3f11df9a7a6353d2219f21e200a))
+
+
+
+## [0.0.3](https://github.com/AshoneA/BLTranslate/compare/v0.0.2...v0.0.3) (2019-09-02)
+
+
+### Features
+
+* update readme ([33cb494](https://github.com/AshoneA/BLTranslate/commit/33cb494942e3c22a6e38616bdf8948806882e1f5))
+
+
+
+## [0.0.2](https://github.com/AshoneA/BLTranslate/compare/df5e8999baba7066ca9c75b0b7bb2ae074c548a1...v0.0.2) (2019-09-02)
+
+
+### Features
+
+* add keybindings ([df5e899](https://github.com/AshoneA/BLTranslate/commit/df5e8999baba7066ca9c75b0b7bb2ae074c548a1))
+* add readme ([876ac02](https://github.com/AshoneA/BLTranslate/commit/876ac0278de169d6a4de2ceef72d9fa3fe1d2915))
+* 适配 {} ([28e07d9](https://github.com/AshoneA/BLTranslate/commit/28e07d9d72880cb05711d71f54dadfc8cf8bd08d))
 
 
 
