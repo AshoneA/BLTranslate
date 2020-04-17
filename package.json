@@ -2,7 +2,7 @@
   "name": "BLTranslate",
   "displayName": "BLTranslate",
   "description": "",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "zefengbao",
   "engines": {
     "vscode": "^1.37.0"
