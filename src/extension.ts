@@ -1,10 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from "vscode";
-import * as fs from "fs";
-import * as path from "path";
-import * as ggTranslate from "@vitalets/google-translate-api";
-import * as utils from "./utils/index";
+import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as ggTranslate from '@vitalets/google-translate-api';
+import * as utils from './utils/index';
 
 interface JsonObj {
   [key: string]: string;
@@ -15,13 +15,17 @@ const generateJson = (json: JsonObj, text: string) => {
   const folderPath = vscode.workspace.rootPath;
   let maxKey = 0;
   let baseRegex: RegExp;
-  const customeConfig = require(folderPath + "/.bl-custom.json");
+  const customJson = fs.readFileSync(folderPath + '/.bl-custom.json', 'utf-8');
+  if (!customJson) {
+    vscode.window.showInformationMessage('没有 .bl-custom.json 文件');
+  }
+  const customeConfig = JSON.parse(customJson);
   const { i18nKey } = customeConfig;
   baseRegex = RegExp(`^key-${i18nKey}-\\d+`);
   maxKey = Math.max(
     ...Object.keys(json).map((key: string) => {
       if (baseRegex.test(key)) {
-        return parseInt(key.replace(`key-${i18nKey}-`, ""));
+        return parseInt(key.replace(`key-${i18nKey}-`, ''));
       }
       return 0;
     })
@@ -45,49 +49,49 @@ const writeJsonToFile = (path: string, json: Object) => {
 
 const formatI18n = (text: string) => {
   // get root path
-  const folderPath = vscode.workspace.rootPath || "";
+  const folderPath = vscode.workspace.rootPath || '';
   try {
     vscode.workspace.fs
-      .readFile(vscode.Uri.file(folderPath + "/.bl-custom.json"))
+      .readFile(vscode.Uri.file(folderPath + '/.bl-custom.json'))
       .then(async () => {
         const CNPath = path.resolve(
           folderPath,
-          "src/utils/locale/languageFiles/zhCN/web-cn.json"
+          'src/utils/locale/languageFiles/zhCN/web-cn.json'
         );
         const ENPath = path.resolve(
           folderPath,
-          "src/utils/locale/languageFiles/enUS/web-en.json"
+          'src/utils/locale/languageFiles/enUS/web-en.json'
         );
         const KOPath = path.resolve(
           folderPath,
-          "src/utils/locale/languageFiles/koKR/web-ko.json"
+          'src/utils/locale/languageFiles/koKR/web-ko.json'
         );
         const VIPath = path.resolve(
           folderPath,
-          "src/utils/locale/languageFiles/viVN/web-VN.json"
+          'src/utils/locale/languageFiles/viVN/web-VN.json'
         );
-        const CNJson = JSON.parse(fs.readFileSync(CNPath, "utf-8"));
+        const CNJson = JSON.parse(fs.readFileSync(CNPath, 'utf-8'));
         const languageType = [
           {
             path: ENPath,
-            json: JSON.parse(fs.readFileSync(ENPath, "utf-8")),
-            type: "en",
+            json: JSON.parse(fs.readFileSync(ENPath, 'utf-8')),
+            type: 'en',
           },
           {
             path: KOPath,
-            json: JSON.parse(fs.readFileSync(KOPath, "utf-8")),
-            type: "ko",
+            json: JSON.parse(fs.readFileSync(KOPath, 'utf-8')),
+            type: 'ko',
           },
           {
             path: VIPath,
-            json: JSON.parse(fs.readFileSync(VIPath, "utf-8")),
-            type: "vi",
+            json: JSON.parse(fs.readFileSync(VIPath, 'utf-8')),
+            type: 'vi',
           },
         ];
         if (!Object.values(CNJson).includes(text)) {
           Promise.all(
             languageType.map((language) =>
-              ggTranslate(text, { to: language.type, tld: "cn", client: "gtx" })
+              ggTranslate(text, { to: language.type, tld: 'cn', client: 'gtx' })
             )
           ).then((res: { text: string }[]) => {
             res.forEach((data: { text: string }, index: number) => {
@@ -97,11 +101,11 @@ const formatI18n = (text: string) => {
                 languageType[index].path,
                 generateJson(languageType[index].json, TranslateText)
               );
-              vscode.window.showInformationMessage("翻译成功!");
+              vscode.window.showInformationMessage('翻译成功!');
             });
           });
         } else {
-          vscode.window.showInformationMessage("已存在该文本!");
+          vscode.window.showInformationMessage('已存在该文本!');
         }
       });
   } catch (error) {}
@@ -115,14 +119,14 @@ const handleAppFormat = (_text: string) => {
   ) {
     text = _text.slice(1, -1);
   }
-  const folderPath = vscode.workspace.rootPath || "";
-  const i18nDir = path.resolve(folderPath, "app/constants/translations");
-  let textKey = "";
+  const folderPath = vscode.workspace.rootPath || '';
+  const i18nDir = path.resolve(folderPath, 'app/constants/translations');
+  let textKey = '';
   const files = fs.readdirSync(i18nDir);
   files.forEach((file) => {
     if (/zh*/.test(file)) {
       const json = JSON.parse(
-        fs.readFileSync(path.resolve(i18nDir, file), "utf-8")
+        fs.readFileSync(path.resolve(i18nDir, file), 'utf-8')
       );
       Object.keys(json).some((t) => {
         if (json[t] === text) {
@@ -137,36 +141,36 @@ const handleAppFormat = (_text: string) => {
   if (!textKey) {
     const { i18nKey } = utils.getCustomConfig();
     const CNPath = path.resolve(i18nDir, `zh-${i18nKey}.json`);
-    const CNJson = JSON.parse(fs.readFileSync(CNPath, "utf-8"));
+    const CNJson = JSON.parse(fs.readFileSync(CNPath, 'utf-8'));
     const ENPath = path.resolve(i18nDir, `en-${i18nKey}.json`);
     const KOPath = path.resolve(i18nDir, `ko-${i18nKey}.json`);
     const VIPath = path.resolve(i18nDir, `vi-${i18nKey}.json`);
     const languageType = [
       {
         path: ENPath,
-        json: JSON.parse(fs.readFileSync(ENPath, "utf-8")),
-        type: "en",
+        json: JSON.parse(fs.readFileSync(ENPath, 'utf-8')),
+        type: 'en',
       },
       {
         path: KOPath,
-        json: JSON.parse(fs.readFileSync(KOPath, "utf-8")),
-        type: "ko",
+        json: JSON.parse(fs.readFileSync(KOPath, 'utf-8')),
+        type: 'ko',
       },
       {
         path: VIPath,
-        json: JSON.parse(fs.readFileSync(VIPath, "utf-8")),
-        type: "vi",
+        json: JSON.parse(fs.readFileSync(VIPath, 'utf-8')),
+        type: 'vi',
       },
     ];
     const maxKey = Math.max(
       ...Object.keys(CNJson).map((key: string) =>
-        parseInt(key.replace(`key${i18nKey}-`, ""))
+        parseInt(key.replace(`key${i18nKey}-`, ''))
       )
     );
     textKey = `key${i18nKey}-${maxKey + 1}`;
     Promise.all(
       languageType.map((language) =>
-        ggTranslate(text, { to: language.type, tld: "cn" })
+        ggTranslate(text, { to: language.type, tld: 'cn' })
       )
     ).then((res: { text: string }[]) => {
       res.forEach((data: { text: string }, index: number) => {
@@ -180,7 +184,7 @@ const handleAppFormat = (_text: string) => {
           [textKey]: TranslateText,
         });
       });
-      vscode.window.showInformationMessage("翻译成功!");
+      vscode.window.showInformationMessage('翻译成功!');
     });
   }
   return textKey;
@@ -199,25 +203,25 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerTextEditorCommand(
-    "extension.BLTranslate",
+    'extension.BLTranslate',
     (TextEditor, TextEditorEdit) => {
       // The code you place here will be executed every time your command is executed
       const selection = TextEditor.selections[0];
       const text = TextEditor.document.getText(selection);
       const pkg = utils.getPkgInfo();
-      let replaceText = "";
-      if (pkg.name === "gc_native") {
+      let replaceText = '';
+      if (pkg.name === 'gc_native') {
         const appTranslateKey = handleAppFormat(text);
         const matchs = text.match(/(\${[^\${}]*})/g);
         if (matchs) {
           replaceText = `i18nConfigGlobal.w('${appTranslateKey}', {${matchs
             .map((v) => v.slice(2, -1))
-            .join(", ")}})`;
+            .join(', ')}})`;
         } else {
           replaceText = `i18nConfigGlobal.t('${appTranslateKey}')`;
         }
       } else {
-        if (text.startsWith("{") && text.endsWith("}")) {
+        if (text.startsWith('{') && text.endsWith('}')) {
           replaceText = `<FormattedMessage defaultMessage=${text} />`;
         } else {
           replaceText = `<FormattedMessage defaultMessage={'${text}'} />`;
@@ -225,12 +229,12 @@ export function activate(context: vscode.ExtensionContext) {
         formatI18n(text);
       }
       TextEditorEdit.replace(selection, replaceText);
-      vscode.window.showInformationMessage("Format成功!");
+      vscode.window.showInformationMessage('Format成功!');
     }
   );
 
   let disposable2 = vscode.commands.registerTextEditorCommand(
-    "extension.BLi18n",
+    'extension.BLi18n',
     (TextEditor, TextEditorEdit) => {
       // The code you place here will be executed every time your command is executed
       const selection = TextEditor.selections[0];
