@@ -1,8 +1,15 @@
+## [0.0.9](https://github.com/AshoneA/BLTranslate/compare/v0.0.8...v0.0.9) (2020-04-17)
+
+
+### Bug Fixes
+
+* .custom-json 导致翻译失败 ([0c095e0](https://github.com/AshoneA/BLTranslate/commit/0c095e0d2b6bbd09802c7ca4d7f444712cbe8368))
+
+
+
 ## [0.0.8](https://github.com/AshoneA/BLTranslate/compare/v0.0.7...v0.0.8) (2020-04-15)
 
-* web 增加越南语、韩语自动翻译
-* App 支持双引号包裹的字符串
-* App 调整模板字符串处理
+
 
 ## [0.0.7](https://github.com/AshoneA/BLTranslate/compare/v0.0.6...v0.0.7) (2019-10-25)
 
